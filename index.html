@@ -1,98 +1,240 @@
-<!DOCTYPE html>
-<html lang="pt">
+<!DOCTYPE html> 
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Swipe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Itecons - Contactos</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
-        body, html {
+        @import url('https://fonts.cdnfonts.com/css/avenir-lt-std');
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            height: 100%;
-            overflow: hidden;
+        }
+        :root {
+            --primary-blue: #007bff;
+            --white: #ffffff;
+            --dark-text: #333333;
+        }
+        body {
+            font-family: 'Avenir LT Std', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+        }
+        .top-section {
+            background-color: var(--primary-blue);
+            padding-bottom: 80px; /* Increased padding to push logo down */
+            padding-top: 60px; /* Added top padding to create more space */
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .logo {
+            max-height: 100px;
+            width: auto;
+            display: block;
+            margin: 0 auto 40px;
+            object-fit: contain;
+        }
+        .social-links .list-inline {
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f4f4f4;
+            list-style: none;
+            margin-bottom: 0;
+            gap: 30px;
         }
-        .iframe-container {
+        .social-links .list-inline-item {
             display: flex;
-            width: 100vw;
-            height: 100vh;
-            transition: transform 0.3s ease-in-out;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s ease;
         }
-        iframe {
-            width: 100vw;
-            height: 100vh;
-            border: none;
+        .social-links .list-inline-item:active {
+            transform: scale(0.9);
         }
-        .iframe-hidden {
-            display: none;
+        .social-links a {
+            text-decoration: none !important;
         }
-
-        /* Bloquear a rotação vertical */
-        @media only screen and (orientation: portrait) {
-            body {
-                display: none;
+        .social-links .fa-stack {
+            width: 3em;
+            height: 3em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .social-links .fa-stack-2x {
+            position: absolute;
+            color: white;
+            font-size: 3em;
+        }
+        .social-links .fa-stack-1x {
+            position: relative;
+            color: var(--primary-blue);
+            font-size: 1.5em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+        .content-section {
+            background-color: var(--white);
+            color: var(--dark-text);
+            padding: 0px;
+        }
+        .newsletter-container {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .newsletter-container a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            transition: opacity 0.3s ease;
+        }
+        .newsletter-container a:hover {
+            opacity: 0.8;
+        }
+        .contact-container h3 {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 0px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        .contact-info h6 {
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            opacity: 0.8;
+            color: var(--primary-blue);
+        }
+        .contact-info a {
+            color: var(--dark-text);
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        .map-container {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .map-container iframe {
+            width: 100%;
+            border: 0;
+            border-radius: 10px;
+        }
+        @media (max-width: 768px) {
+            .contact-info {
+                padding: 15px;
+            }
+            .contact-info h6 {
+                font-size: 0.9rem;
+            }
+            .contact-info p, 
+            .contact-info div {
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="iframe-container">
-        <iframe id="iframe1" src="http://localhost/NEWS/termoServer/termo1.php"></iframe>
-        <iframe id="iframe2" src="http://localhost/NEWS/termoServer/termo2.php" class="iframe-hidden"></iframe>
-        <iframe id="iframe3" src="http://localhost/NEWS/termoServer/termo3.php" class="iframe-hidden"></iframe>
-        <iframe id="iframe4" src="https://thingsboard.itecons.pt/dashboard/872c0570-abee-11ef-a0ee-df46eee9b5b2?publicId=1eebd130-213f-11ec-9eee-c9c8a19bf12b" class="iframe-hidden"></iframe>
-        <iframe id="iframe5" src="https://thingsboard.itecons.pt/dashboard/7661a200-abf2-11ef-a0ee-df46eee9b5b2?publicId=1eebd130-213f-11ec-9eee-c9c8a19bf12b" class="iframe-hidden"></iframe>
+    <div class="top-section">
+        <div class="container">
+            <img src="https://raw.githubusercontent.com/DGitecons/public/main/%C3%ADcones/itecons-white.png" alt="itecons" class="logo">
+            
+            <div class="social-links">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/itecons.fb" target="_blank">
+                            <span class="fa-stack">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-facebook-f fa-stack-1x"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://www.linkedin.com/company/itecons" target="_blank">
+                            <span class="fa-stack">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-linkedin-in fa-stack-1x"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://www.youtube.com/user/itecons" target="_blank">
+                            <span class="fa-stack">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-youtube fa-stack-1x"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/itecons" target="_blank">
+                            <span class="fa-stack">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-instagram fa-stack-1x"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 
-    <script>
-        let currentIndex = 0;
-        const iframes = document.querySelectorAll('iframe');
-        const container = document.querySelector('.iframe-container');
+    <div class="content-section">
+        <div class="container">
+            <div class="newsletter-container">
+                <a href="https://www.itecons.uc.pt/newsletter_subscribers/new" target="_blank">Newsletter</a>
+            </div>
 
-        function showIframe(index) {
-            if (index >= 0 && index < iframes.length) {
-                // Hide all iframes
-                iframes.forEach((iframe, i) => {
-                    iframe.classList.add('iframe-hidden');
-                });
-                // Show the current iframe
-                iframes[index].classList.remove('iframe-hidden');
-                // Adjust the container position
-                container.style.transform = `translateX(-${index * 100}vw)`;
-                currentIndex = index;
-            }
-        }
+            <div class="contact-container">
+                <h3>Contactos</h3>
+                <div class="contact-info">
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <h6>Horário</h6>
+                            <div>Seg a Sex:&nbsp;8h00 às 20h00<br>Outros horários, contactar:&nbsp;</div>
+                            <div><a href="tel:+351918262300">918 262 300</a></div>
+                            <small>(Chamada para a rede móvel nacional)</small>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <h6>Morada</h6>
+                            <p>Rua Pedro Hispano, s/n<br>3030-289 Coimbra<br>PORTUGAL</p>
+                            <p>Rua de Santa Bárbara, n.º 57<br>RC ES, Patacão<br>8005-511 Faro<br>PORTUGAL</p>
+                            <h6>Coordenadas GPS</h6>
+                            <p>Coimbra: 40.190167, -8.413305<br>Faro: 37.052990, -7.953500</p>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <h6>E-mail</h6>
+                            <p><a href="mailto:itecons@itecons.uc.pt">itecons@itecons.uc.pt</a></p>
+                            <h6>Telefone</h6>
+                            <p>
+                                <a href="tel:+351239798949">+351 239 79 89 49</a><br>
+                                <a href="tel:+351239798929">+351 239 79 89 29</a>
+                            </p>
+                            <small>(Chamada para a rede fixa nacional)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        // Swipe logic
-        let startX;
-        document.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-        });
-
-        document.addEventListener('touchend', (e) => {
-            const endX = e.changedTouches[0].clientX;
-            const diff = startX - endX;
-
-            if (Math.abs(diff) > 50) {
-                if (diff > 0) {
-                    // Swipe left
-                    showIframe(currentIndex + 1);
-                } else {
-                    // Swipe right
-                    showIframe(currentIndex - 1);
-                }
-            }
-        });
-
-        // Optional: Prevent horizontal scrolling
-        window.addEventListener('touchmove', function(e) {
-            if (Math.abs(e.changedTouches[0].clientX - startX) > 50) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-    </script>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3047.860535441131!2d-8.415553048821065!3d40.18991707722498!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd22f994741f5ab1%3A0x6927a539ce6c601b!2sItecons!5e0!3m2!1spt-PT!2spt!4v1547123162119" 
+                    height="310" 
+                    allowfullscreen="">
+                </iframe>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
