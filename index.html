@@ -30,7 +30,7 @@
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0px;
         }
         .logo {
             max-height: 100px;
@@ -144,6 +144,93 @@
                 font-size: 0.9rem;
             }
         }
+        #map {
+            width: 100%;
+            height: 500px;
+            margin-bottom: 20px;
+        }
+        .legend {
+            padding: 8px 12px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .traffic-legend {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .traffic-colors {
+            display: flex;
+            gap: 3px;
+            height: 10px;
+            margin: 0 4px;
+        }
+        .traffic-segment {
+            width: 12px;
+            height: 100%;
+        }
+        .traffic-segment.rapid { background-color: #39ac39; }
+        .traffic-segment.medium-rapid { background-color: #85c285; }
+        .traffic-segment.moderate { background-color: #ffcc00; }
+        .traffic-segment.medium-slow { background-color: #ff6666; }
+        .traffic-segment.slow { background-color: #d31818; }
+        
+        .traffic-label {
+            color: #666;
+        }
+        .traffic-label.left {
+            text-align: right;
+        }
+        .traffic-label.right {
+            text-align: left;
+        }
+        
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 12px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            border-radius: 50%;
+        }
+        .custom-div-icon {
+            background: none;
+            border: none;
+        }
+        .marker-label {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 5px 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-weight: bold;
+            white-space: nowrap;
+            position: relative;
+            top: 0px;
+            left: -40px;
+            transform: translateX(50%);
+            min-width: max-content;
+            text-align: center;
+            display: inline-block;
+        }
+        .marker-icon {
+            width: 15px;
+            height: 15px;
+            background-color: #2196F3;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     </style>
 </head>
 <body>
@@ -226,15 +313,81 @@
                     </div>
                 </div>
             </div>
-
+            <div class="content-section"></div>
             <div class="map-container">
+                <h3 style="text-align: center; margin-bottom: 0px; color: #2196F3;">Localização</h3>
                 <iframe 
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3047.860535441131!2d-8.415553048821065!3d40.18991707722498!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd22f994741f5ab1%3A0x6927a539ce6c601b!2sItecons!5e0!3m2!1spt-PT!2spt!4v1547123162119" 
                     height="310" 
                     allowfullscreen="">
                 </iframe>
             </div>
-        </div>
+            </div>
+            <div class="content-section">
+                <div class="container">
+                    <h3 style="text-align: center; margin-bottom: 0px; color: #2196F3">Trânsito</h3>
+                    <div id="map"></div>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+                </div>
+            </div>
+            
     </div>
+    <script>
+        const map = L.map('map').setView([40.193, -8.4190], 15);
+        
+        L.tileLayer('https://{s}.api.tomtom.com/map/1/tile/basic/{style}/{z}/{x}/{y}.png?key=eKoj52tX5uu8UGZd7RSLRAn7w9O7RKI9', {
+            style: 'main',
+            maxZoom: 14
+        }).addTo(map);
+
+        L.tileLayer('https://{s}.api.tomtom.com/traffic/map/4/tile/flow/{style}/{z}/{x}/{y}.png?key=eKoj52tX5uu8UGZd7RSLRAn7w9O7RKI9', {
+            style: 'relative',
+            maxZoom: 14,
+            opacity: 0.7
+        }).addTo(map);
+
+        const legend = L.control({position: 'bottomright'});
+        legend.onAdd = function(map) {
+            const div = L.DomUtil.create('div', 'legend');
+            div.innerHTML = `
+                <div class="traffic-legend">
+                    <span class="traffic-label left">Rápido</span>
+                    <div class="traffic-colors">
+                        <div class="traffic-segment rapid"></div>
+                        <div class="traffic-segment medium-rapid"></div>
+                        <div class="traffic-segment moderate"></div>
+                        <div class="traffic-segment medium-slow"></div>
+                        <div class="traffic-segment slow"></div>
+                    </div>
+                    <span class="traffic-label right">Lento</span>
+                </div>
+            `;
+            return div;
+        };
+        legend.addTo(map);
+
+        const iteconsDivIcon = L.divIcon({
+            className: 'custom-div-icon',
+            html: `
+                <div class="marker-label">ITECONS</div>
+                <div class="marker-icon"></div>
+            `,
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+            popupAnchor: [0, -30]
+        });
+
+        L.marker([40.191567, -8.412305], { icon: iteconsDivIcon })
+            .addTo(map)
+            .bindPopup('ITECONS - Instituto de Investigação e Desenvolvimento Tecnológico para a Construção, Energia, Ambiente e Sustentabilidade');
+
+        
+        
+
+        map.on('moveend', updateIncidents);
+        updateIncidents();
+        setInterval(updateIncidents, 300000);
+    </script>
 </body>
 </html>
